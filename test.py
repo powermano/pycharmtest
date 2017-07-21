@@ -14,7 +14,7 @@ import re
 
 
 
-m=re.findall(r'(th\w+) and (th\w+)','this and that..')
+m=re.findall(r'(th\w+) and (th\w+)','this and that....')
 if m is not None:
    for each in m:
        print(each)
