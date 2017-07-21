@@ -20,6 +20,8 @@ while True:
         if not data:
             break
         tcpclisock.send('[%s] %s'.encode(encoding='utf-8') %(bytes(ctime(), 'utf-8'), data))
+        tcpclisock.close()
+
 
 
 
