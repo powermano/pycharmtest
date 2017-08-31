@@ -58,5 +58,40 @@ def long_time_task(name):
 # if __name__=='__main__':
 #     main()
 
+from atexit import register
+from  re import compile
+from threading import Thread
+from time import  ctime
+from urllib.request import urlopen as uopen
+
+REGEX=compile('#([\d,]+) in Books ')
+AMZN= 'http://amazon.com/dp/'
+ISBNs={
+       '0132269937': 'Core Python Programming',
+       '0132356139': 'Python Web Development with Django',
+       '0137143419': 'Python Fundmentals',
+}
+
+def getRanking(ibsn):
+    page = uopen('%s%s' % (AMZN,ibsn))
+    data = page.read()
+    page.close()
+    return REGEX.findall(data.decode('utf-8'))[0]
+
+def _showRanking(ibsn):
+    print('- %r ranked %s' %(ISBNs[ibsn], getRanking(ibsn)))
+
+def _main():
+    print('at %s on Amazon' %ctime())
+    for isbn in ISBNs:
+        Thread(target=_showRanking,args=(isbn,)).start()
+
+
+@register
+def _atexit():
+    print('all done at %s' %ctime())
+
+if __name__=='__main__':
+    _main()
 
 
