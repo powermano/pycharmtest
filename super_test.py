@@ -5,16 +5,16 @@ class room:
           self.usedfor = usedfor
 
       def display(self):
-         print("this is my house")
+         print("this is my house area=%s usedfor=%s " %(self.area, self.usedfor))
 
 class babyroom(room):
-     def __init__(self,area=40,usedfor="son",wallcolor='green'):
-         super().__init__(area,usedfor)
+     def __init__(self,area=60,usedfor='son',wallcolor='green'):
+         super().__init__(area,usedfor) ##same to room.__init__(20,'doctor')
          self.wallcolr = wallcolor
 
      def display(self):
          super().display()
-         print("babyroom area:%s wallcollor:%s"%(self.area,self.wallcolr))
+         print("babyroom area:%s wallcollor:%s for %s"%(self.area,self.wallcolr,self.usedfor))
 
 class rent:
      def __init__(self,money=1000):
@@ -23,15 +23,23 @@ class rent:
      def display(self):
          print("for rent at the price of %s"%self.rentmoney)
 
-# class agent(babyroom,rent):
-class agent(rent,babyroom):
+class agent(babyroom,rent):
+#class agent(rent,babyroom):
      def display(self):
-         super(babyroom,self).display()
+         super().__init__(20,'doctor','yello') #same to babyroom.__init__(20,'doctor','yellow')
+         super(agent,self).display()
          print("rent house agent")
+         print('first: %s second : %s third: %s '%(self.area, self.usedfor, self.wallcolr))
 
 a = agent()
 a.display()
 print(agent.mro())
+##add more test:test for variable
+# this is my house area=20 usedfor=doctor
+# babyroom area:20 wallcollor:yello for doctor
+# rent house agent
+# first: 20 second : doctor third: yello
+
 ##the results:
 #this is my house
 #rent house agent
