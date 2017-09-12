@@ -76,3 +76,11 @@ final=regex.findall(s)
 #
 # if __name__=='__main__':
 #     main()
+
+class A(object):
+    def __init__(self, name='cc', year=12):
+        self.name = name
+        self.year = year
+class B(A):
+    pass
+
