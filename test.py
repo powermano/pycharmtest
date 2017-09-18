@@ -14,15 +14,15 @@ import re
 
 
 
-m=re.findall(r'(th\w+) and (th\w+)','this and that......')
-if m is not None:
-   for each in m:
-       print(each)
-
-
-regex=re.compile('#([\d,]+) in Books ')
-s='#123,456 in Books'
-final=regex.findall(s)
+# m=re.findall(r'(th\w+) and (th\w+)','this and that......')
+# if m is not None:
+#    for each in m:
+#        print(each)
+#
+#
+# regex=re.compile('#([\d,]+) in Books ')
+# s='#123,456 in Books'
+# final=regex.findall(s)
 
 #from multiprocessing import Pool
 # import os, time, random
@@ -77,10 +77,24 @@ final=regex.findall(s)
 # if __name__=='__main__':
 #     main()
 
-class A(object):
-    def __init__(self, name='cc', year=12):
-        self.name = name
-        self.year = year
-class B(A):
-    pass
+# class A(object):
+#     def __init__(self, name='cc', year=12):
+#         self.name = name
+#         self.year = year
+# class B(A):
+#     pass
+from enum import Enum, unique
 
+@unique
+class Weekday(Enum):
+    Sun = 0 # Sun的value被设定为0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
+
+day1 = Weekday.Mon
+
+print(day1)
