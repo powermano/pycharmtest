@@ -57,31 +57,33 @@
 import pymysql
 
 # 打开数据库连接
-db = pymysql.connect("localhost", "root", "123456")
+db = pymysql.connect(host="localhost",port=3306,user= "root", password="123456", db='test')
 
-cursor = db.cursor()
+# cursor = db.cursor()
+#
+# #创建数据库
+# cursor.execute('create database test')
+#
+# # 使用 cursor() 方法创建一个游标对象 cursor
+# cursor.execute('create table user (id varchar(20) primary key, name varchar(20))')
+#
+# cursor.execute('insert into user (id, name) values (%s, %s)', ['1', 'Michael'])
+#
+# db.commit() #必须要确认
 
-#创建数据库
-cursor.execute('create database test')
-
-# 使用 cursor() 方法创建一个游标对象 cursor
-cursor.execute('create table user (id varchar(20) primary key, name varchar(20))')
-
-cursor.execute('insert into user (id, name) values (%s, %s)', ['1', 'Michael'])
-
-db.commit() #必须要确认
-
-cursor.close()
+# cursor.close()
 
 cursor = db.cursor()
 # 使用 execute()  方法执行 SQL 查询
-cursor.execute('select * from user where id = %s', ('1',))
+cursor.execute('select * from user where id = %s', ['1',])
 
 values = cursor.fetchall()#取所有数据
 
 data = cursor.fetchone()# 使用 fetchone() 方法获取单条数据
 
-print("Database version : %s " % data)
-
+print("Database version : %s " % 5.7)
+print(data)
+print(values[0])
+cursor.close()
 # 关闭数据库连接
 db.close()
