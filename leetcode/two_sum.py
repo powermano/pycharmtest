@@ -36,4 +36,4 @@ target = 9
 a = Solution()
 b = a.twoSum(nums, target)
 print(b)
-print('sssfsddff')
+
