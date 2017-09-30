@@ -52,13 +52,14 @@ class Solution(object):
                     str = s1[(i - p[i][j] + 1):i + 1]
 
                     flag =True
-                    for i in range(len(str)//2):
-                        if str[i]!=str[len(str)-1-i]:
+                    for k in range(len(str)//2):
+                        if str[k]!=str[len(str)-1-k]:
                             flag=False
                             break
                     if flag and (final_str==None or len(str)>len(final_str)):
                             final_str=str
-
+        if final_str==None:
+            return s1[0]
         return  final_str
 
 
@@ -66,7 +67,7 @@ class Solution(object):
 # s2='cabdf'
 # print(findCommandSubstring(s1, s2))
 
-test='ccc'
+test='abcda'
 s = Solution()
 print(s.longestPalindrome(test))
 
