@@ -14,11 +14,20 @@
 #
 # print(day1)
 # print(day1.value)
-# from enum import Enum
-#
-# Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
-# for name, member in Month.__members__.items():
-#     print(name, '=>', member, ',', member.value)
+from enum import Enum
+
+Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
+for name, member in Month.__members__.items():
+    print(name, '=>', member, ',', member.value)
+
+class Color(Enum):
+    red = 1
+    orange = 2
+    yellow = 3
+    green = 4
+    blue = 5
+    indigo = 6
+    purple = 7
 
 
 ###test the type of the input data
@@ -36,24 +45,24 @@
 
 
 ### test for def __new__():
-
-class A(type):
-    pass
-
-
-class ListMetaclass(type):
-    def __new__(cls, name, bases, attrs):
-        attrs['add'] = lambda self, value: self.append(value)
-        return type.__new__(A, name, bases, attrs)
-
-    # def __init__(self):
-    #     print('base class work')
-
-class MyList(list, metaclass=ListMetaclass):
-    # def __init__(self):
-    #     print('it works')
-    pass
-
-L = MyList()
-# L.add(1)
-print(type(L))
+#
+# class A(type):
+#     pass
+#
+#
+# class ListMetaclass(type):
+#     def __new__(cls, name, bases, attrs):
+#         attrs['add'] = lambda self, value: self.append(value)
+#         return type.__new__(A, name, bases, attrs)
+#
+#     # def __init__(self):
+#     #     print('base class work')
+#
+# class MyList(list, metaclass=ListMetaclass):
+#     # def __init__(self):
+#     #     print('it works')
+#     pass
+#
+# L = MyList()
+# # L.add(1)
+# print(type(L))

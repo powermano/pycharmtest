@@ -85,10 +85,10 @@ class Solution(object):
                 if target in counter:
                     if (target == pos[x] or target == y) and counter[target] > 1:
                         res.append((target, pos[x], y))
-                    elif (target > pos[x] or target < y):
+                    elif (target < pos[x] or target < y):
                         res.append((target, pos[x], y))
         return res
 
 
 a=Solution()
-print(a.threeSum([1,3,4,5,-1,-2,-3,0]))
+print(a.threeSum([-1, 0, 1, 2, -1, -4]))
