@@ -10,7 +10,7 @@ The most common realisation of k-medoid clustering is the Partitioning Around Me
 4. Select the configuration with the lowest cost.
 5. repeat steps 2 to 4 until there is no change in the medoid.
 '''
-from clusterBase import importData, pearson_distance, channel_wise_mean
+from clusterBase import importData, pearson_distance, channel_wise_mean, cosine_similarity
 import random
 import numpy as np
 
@@ -125,6 +125,7 @@ def load_data(filename):
     return dataset
 
 # load pkl.example
+uncertainty_file = 'E:/'
 def load_pkl(filename):
     import pickle
     result = []
@@ -142,9 +143,36 @@ def load_pkl(filename):
             result1 = [item]
             result1.extend(temp)
             result = np.vstack((result, np.array([result1])))
-
         count += 1
     return  result
+
+f_measure = {} # for store the similarity computation, so as to avoid duplicate computation
+def f(sa, x, result):
+    """
+
+    :param sa: a list of index, type:int
+    :param x:  a index, type; int
+    :param result: a np.array : [index ,x1, x2,...xn]
+    :return: the max_similarity between sa and x
+    """
+    assert len(sa) > 0
+    max_similarity = -np.inf
+    for i in range(len(sa)):
+        temp = f_measure.get((sa[i], x), None)
+        if temp == None:
+            temp = cosine_similarity(result[sa[i], 1:], result[x, 1:])
+        if temp > max_similarity:
+            max_similarity = temp
+    return max_similarity
+
+def F(sa, su, result):
+    all_similarity = 0
+    for i in range(len(su)):
+        all_similarity += f(sa, su[i], result)
+    return all_similarity
+
+def greedy_search(sa, sc, su, k, result):
+    pass
 
 if __name__ == '__main__':
     # dataMat = getDataset('R15.txt',150)
