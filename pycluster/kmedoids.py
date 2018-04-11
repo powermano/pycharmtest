@@ -171,8 +171,22 @@ def F(sa, su, result):
         all_similarity += f(sa, su[i], result)
     return all_similarity
 
-def greedy_search(sa, sc, su, k, result):
-    pass
+def greedy_search(sc, su, k, result):
+    sa = []
+    while len(sa) < k:
+        F_max = 0
+        choise = 0
+        index = 0
+        for i in range(len(sc)):
+            sa.append(sc[i])
+            if F(sa, su, result) > F_max:
+                F_max = F(sa, su, result)
+                choise = sc[i]
+                index = i
+            sa.pop()
+        sa.append(choise)
+        sc.pop(index)
+    return sa
 
 if __name__ == '__main__':
     # dataMat = getDataset('R15.txt',150)
