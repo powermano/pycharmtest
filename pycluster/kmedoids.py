@@ -13,7 +13,8 @@ The most common realisation of k-medoid clustering is the Partitioning Around Me
 from clusterBase import importData, pearson_distance, channel_wise_mean, cosine_similarity
 import random
 import numpy as np
-
+import pickle
+import os
 distances_cache = {}
 
 def totalcost(blogwords, costf, medoids_idx):
@@ -28,7 +29,7 @@ def totalcost(blogwords, costf, medoids_idx):
         for m in medoids:
             tmp = distances_cache.get((m, i), None)
             if tmp == None:
-                tmp = pearson_distance(blogwords[m, :], blogwords[i, :])
+                tmp = pearson_distance(blogwords[m, 1:], blogwords[i, 1:])
                 distances_cache[(m, i)] = tmp
             if tmp < min_cost:
                 choice = m
@@ -125,22 +126,25 @@ def load_data(filename):
     return dataset
 
 # load pkl.example
-uncertainty_file = 'E:/'
-def load_pkl(filename):
-    import pickle
+
+
+def load_pkl():
     result = []
     count = 1
-    with open(filename, 'rb') as f:
-        data_dict = pickle.load(f)
-    for item in data_dict:
+    with open(image_set_file, 'r') as f:
+        image_index = [x.strip() for x in f.readlines()]
+    for x in image_index:
+        with open(os.path.join(pickle_file, x + '.pkl'), 'rb') as f:
+            data_dict = pickle.load(f)
+
         if count == 1:
-            temp = channel_wise_mean(data_dict[item])
-            result1 = [item]
+            temp = channel_wise_mean(data_dict)
+            result1 = [int(x)]
             result1.extend(temp)
             result = np.array([result1])
         else:
-            temp = channel_wise_mean(data_dict[item])
-            result1 = [item]
+            temp = channel_wise_mean(data_dict)
+            result1 = [int(x)]
             result1.extend(temp)
             result = np.vstack((result, np.array([result1])))
         count += 1
@@ -196,14 +200,33 @@ if __name__ == '__main__':
     # for i in range(len(best_choice)):
     #     listone.append(dataMat[best_choice[i]])
     # show(dataMat, 15, listone, best_medoids)
-    filepath = r'E:/test.txt'
-    dataset = load_data(filepath)
-    best_cost, best_choice, best_medoids = kmedoids(dataset, 2)
-    for i in best_medoids:
-        print(i, best_medoids[i])
-    listone =[]
-    for i in range(len(best_choice)):
-        listone.append(dataset[best_choice[i]])
-    show(dataset, 2, listone, best_medoids)
 
+
+    # filepath = r'E:/test.txt'
+    # dataset = load_data(filepath)
+    # best_cost, best_choice, best_medoids = kmedoids(dataset, 2)
+    # for i in best_medoids:
+    #     print(i, best_medoids[i])
+    # listone =[]
+    # for i in range(len(best_choice)):
+    #     listone.append(dataset[best_choice[i]])
+    # show(dataset, 2, listone, best_medoids)
+
+    output_dir = 'home/ni-list/Pictures/Diversity/train2000/k-medoids/'
+    pickle_file = '/home/ni-list/tf-faster-rcnn/output/res101/voc_2007_test/default/res101_faster_rcnn_iter_35000/feature/'
+    image_set_file = '/home/ni-list/Pictures/Diversity/train2000/train2000.txt'
+    dataset = load_pkl()
+    with open(image_set_file, 'r') as f:
+        image_index = [x.strip() for x in f.readlines()]
+    best_cost, best_choice, best_medoids = kmedoids(dataset, 20)
+    with open(os.path.join(output_dir, 'best_choice.txt'), 'w') as f:
+        for x in best_choice:
+            f.write(image_index[x] + '\n')
+    count = 1
+    for item in best_medoids:
+        with open(os.path.join(output_dir, '%d.txt'%count), 'w') as f:
+            f.write(image_index[item] + '\n')
+            for x in best_medoids[item]:
+                f.write(image_index[x] + '\n')
+        count += 1
 
