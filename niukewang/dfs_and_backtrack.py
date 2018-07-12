@@ -1,10 +1,10 @@
 #read data from console
-
-n, m = map(int, input().split())
+#
+# n, m = map(int, input().split())
 # number = list(map(int, input().split()))
 # a = [list(map(int, input().split())) for i in range(m)]
-b = [[int(x) for x in input().split()] for _ in range(m)]
-print(b)
+# b = [[int(x) for x in input().split()] for _ in range(m)]
+# print(b)
 
 # A = [None for i in range(10)]
 # N = 3
@@ -63,3 +63,35 @@ print(b)
 #
 # dfs(0)
 # print('ans = ' + str(CNT))
+
+number = 3
+A = [None for i in range(10)]
+visited = [0] * (number + 1)
+
+
+# def test(cur):
+#     if cur == number:
+#         print(A[:number])
+#     else:
+#         for i in range(1, number + 1):
+#             if visited[i] != 1:
+#                 A[cur] = i
+#                 visited[i] = 1
+#                 test(cur + 1)
+#                 visited[i] = 0
+#
+# test(0)
+
+def test2(cur, result):
+    if cur == number:
+        print(result)
+    else:
+        for i in range(1, number + 1):
+            if visited[i] != 1:
+                result.append(i)
+                visited[i] = 1
+                test2((cur + 1), result)
+                visited[i] = 0
+                result.pop()
+
+test2(0,[])

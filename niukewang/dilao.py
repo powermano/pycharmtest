@@ -3,13 +3,14 @@ def bsf():
     a = [input() for i in range(n)]
     x0, y0 = list(map(int, input().strip().split()))
     k = int(input())
-    x = list([map(int, input().strip().split()) for i in range(k)])
+    x = [list(map(int, input().strip().split())) for i in range(k)]
+    #x = [[int(s) for s in input().split()] for i in range(k)] also works
     step = [[-1] * m for i in range(n)]
     visit = [[0] * m for i in range(n)]
     current = [[x0,y0]]
     step[x0][y0] = 0
     visit[x0][y0] = 1
-    while current != None:
+    while current != []:
         next = []
         for s in current:
             x0 = s[0]
