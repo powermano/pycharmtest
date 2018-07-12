@@ -1,5 +1,5 @@
 def bsf():
-    n, m = list(map(int, input().strip().split()))
+    n, m = list(map(int, input().strip().split()))  # n, m = map(int, input().strip().split()) also works, this can used when you know the number of parameters
     a = [input() for i in range(n)]
     x0, y0 = list(map(int, input().strip().split()))
     k = int(input())
